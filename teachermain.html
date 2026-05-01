@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+</head>
+<body onload="loadData()">
+
+    <a href="index.html">Back</a>
+    <h1>Teacher Dashboard</h1>
+    <p>Hello, teacher!</p>
+
+    <!-- Name Input -->
+    <div>
+        <label>Enter your name:</label>
+        <input type="text" id="teacherName">
+        <button onclick="saveData()">Save Dashboard</button>
+    </div>
+
+    <hr>
+
+    <!-- Drawing Board -->
+    <h3>Drawing Board</h3>
+    <canvas id="drawingBoard" width="500" height="300" style="border:1px solid #000; cursor: crosshair;"></canvas>
+    <br>
+    <button onclick="clearCanvas()">Clear Board</button>
+    <p><small>*Note: Drawing board clears on refresh unless saved as an image.</small></p>
+
+    <hr>
+
+    <!-- Note Pad -->
+    <h3>Note Pad</h3>
+    <textarea id="notePad" rows="10" cols="60" placeholder="Type your lesson notes here..."></textarea>
+    <br>
+    <button onclick="saveData()">Save Notes</button>
+
+    <hr>
+
+    <!-- Equation Maker -->
+    <h3>Equation Maker</h3>
+    <input type="text" id="num1" size="5" placeholder="5">
+    <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">×</option>
+        <option value="/">÷</option>
+    </select>
+    <input type="text" id="num2" size="5" placeholder="10">
+    <button onclick="makeEquation()">Generate</button>
+    <h2 id="equationResult"></h2>
+
+    <script>
+        // Save and Load Logic
+        function saveData() {
+            const name = document.getElementById('teacherName').value;
+            const notes = document.getElementById('notePad').value;
+            
+            localStorage.setItem('savedName', name);
+            localStorage.setItem('savedNotes', notes);
+            
+            alert("Progress saved!");
+        }
+
+        function loadData() {
+            const name = localStorage.getItem('savedName');
+            const notes = localStorage.getItem('savedNotes');
+            
+            if (name) document.getElementById('teacherName').value = name;
+            if (notes) document.getElementById('notePad').value = notes;
+        }
+
+        // Drawing Logic
+        const canvas = document.getElementById('drawingBoard');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+
+        function startPosition(e) { 
+            painting = true; 
+            draw(e); 
+        }
+        
+        function finishedPosition() { 
+            painting = false; 
+            ctx.beginPath(); 
+        }
+
+        function draw(e) {
+            if (!painting) return;
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'black';
+
+            // Corrects mouse position relative to canvas
+            const rect = canvas.getBoundingClientRect();
+            ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        }
+
+        function clearCanvas() { 
+            ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        }
+
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', finishedPosition);
+        canvas.addEventListener('mousemove', draw);
+
+        // Equation Maker Logic
+        function makeEquation() {
+            const n1 = document.getElementById('num1').value;
+            const op = document.getElementById('operator').value;
+            const n2 = document.getElementById('num2').value;
+            document.getElementById('equationResult').innerText = n1 + " " + op + " " + n2 + " = ?";
+        }
+    </script>
+
+</body>
+</html>
