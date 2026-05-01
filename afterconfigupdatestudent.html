@@ -1,0 +1,27 @@
+<p1> Test Sign In </p1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in</title>
+</head>
+<body>
+
+    <h2>Update</h2>
+
+    <input type="text" id="codeInput" placeholder="Enter code here">
+    <button onclick="checkCode()">Submit</button>
+
+    <script>
+        function checkCode() {
+            var code = document.getElementById("codeInput").value;
+
+            if (code === "81345") {
+                window.location.href = "testsigninstudentela.html";
+            } else {
+                alert("Incorrect code.");
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ELA Comprehensive Test (Grades 4–10)</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .question {
+            margin-bottom: 25px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ELA Test – Grades 4–10</h1>
+
+    <div id="test"></div>
+
+    <button onclick="gradeTest()">Submit Test</button>
+
+    <h2 id="result"></h2>
+</div>
+
+<script>
+
+const questions = [
+{q:"What is a noun?", a:["Action","Person, place, or thing","Description word","Connector"], c:1},
+{q:"Which sentence is correct?", a:["He run fast.","He runs fast.","He running fast.","He ran fastly."], c:1},
+{q:"What is a verb?", a:["Action word","Place","Object","Name"], c:0},
+{q:"Choose the adjective:", a:["Quickly","Blue","Run","Jump"], c:1},
+{q:"What is a synonym for 'happy'?", a:["Sad","Angry","Joyful","Mad"], c:2},
+{q:"What is a metaphor?", a:["Comparison using like/as","Direct comparison","Exaggeration","Sound word"], c:1},
+{q:"Theme means:", a:["Main message","Setting","Character","Conflict"], c:0},
+{q:"Which is a simile?", a:["He is a lion","Fast like lightning","Very tall","Huge mountain"], c:1},
+{q:"What is the setting?", a:["Main idea","Where story happens","Problem","Ending"], c:1},
+{q:"Antonym of 'dark'?", a:["Black","Light","Night","Shadow"], c:1},
+{q:"Which is correct punctuation?", a:["Its raining.","It's raining.","Its' raining.","Its raining!"], c:1},
+{q:"What is a pronoun?", a:["Replaces noun","Action word","Describes noun","Preposition"], c:0},
+{q:"Conflict in story is:", a:["Solution","Problem","Character","Place"], c:1},
+{q:"Which is compound sentence?", a:[
+"I ran.",
+"I ran and I jumped.",
+"Running fast.",
+"He quickly ran."
+], c:1},
+{q:"What is dramatic irony?", a:[
+"When audience knows more",
+"When story is funny",
+"When narrator lies",
+"When setting changes"
+], c:0},
+{q:"Choose correct homophone:", a:[
+"There going home.",
+"Their going home.",
+"They're going home.",
+"Theyre going home."
+], c:2},
+{q:"What is personification?", a:[
+"Giving human traits to objects",
+"Extreme exaggeration",
+"Direct comparison",
+"Sound imitation"
+], c:0},
+{q:"Which is hyperbole?", a:[
+"I'm so hungry I could eat a horse.",
+"He is tall.",
+"It is cold.",
+"She runs fast."
+], c:0},
+{q:"Main idea means:", a:[
+"Small detail",
+"Main point",
+"Character trait",
+"Climax"
+], c:1},
+{q:"What is alliteration?", a:[
+"Repeated beginning sounds",
+"Rhyming",
+"Opposites",
+"Theme"
+], c:0},
+{q:"What is a thesis statement?", a:[
+"Random idea",
+"Main argument of essay",
+"Conclusion",
+"Example"
+], c:1},
+{q:"What is bias?", a:[
+"Fair opinion",
+"Neutral view",
+"Unfair preference",
+"Fact"
+], c:2},
+{q:"Which is complex sentence?", a:[
+"I ran.",
+"I ran and jumped.",
+"Although it rained, we played.",
+"Running fast."
+], c:2},
+{q:"Foreshadowing means:", a:[
+"Flashback",
+"Hint about future",
+"Main idea",
+"Ending"
+], c:1},
+{q:"What is tone?", a:[
+"Author's attitude",
+"Plot",
+"Setting",
+"Conflict"
+], c:0},
+{q:"Point of view is:", a:[
+"Theme",
+"Narrator perspective",
+"Conflict",
+"Ending"
+], c:1},
+{q:"Which is first person POV?", a:[
+"He went.",
+"They ran.",
+"I walked.",
+"She saw."
+], c:2},
+{q:"What is plagiarism?", a:[
+"Copying without credit",
+"Citing sources",
+"Writing essay",
+"Editing paper"
+], c:0},
+{q:"Which uses correct commas?", a:[
+"I bought apples oranges and bananas.",
+"I bought apples, oranges, and bananas.",
+"I bought apples oranges, and bananas.",
+"I bought, apples oranges and bananas."
+], c:1},
+{q:"What is climax?", a:[
+"Beginning",
+"Highest tension",
+"Ending",
+"Theme"
+], c:1},
+{q:"What is figurative language?", a:[
+"Literal meaning",
+"Exact fact",
+"Creative expression",
+"Biography"
+], c:2},
+{q:"What is narrative writing?", a:[
+"Argument",
+"Story",
+"Research",
+"Instruction"
+], c:1},
+{q:"What is persuasive writing?", a:[
+"Tell story",
+"Give directions",
+"Convince reader",
+"Describe object"
+], c:2},
+{q:"What is exposition?", a:[
+"Background info",
+"Climax",
+"Conflict",
+"Ending"
+], c:0},
+{q:"Which sentence shows correct subject-verb agreement?", a:[
+"They was here.",
+"They were here.",
+"They is here.",
+"They be here."
+], c:1},
+{q:"What is an inference?", a:[
+"Direct fact",
+"Educated guess",
+"Theme",
+"Conflict"
+], c:1},
+{q:"What is a prefix?", a:[
+"Ending word part",
+"Beginning word part",
+"Root word",
+"Suffix"
+], c:1},
+{q:"What is a suffix?", a:[
+"Beginning word part",
+"Middle word part",
+"Ending word part",
+"Prefix"
+], c:2},
+{q:"Which is an example of imagery?", a:[
+"It was nice.",
+"The sun melted into a sea of orange light.",
+"He ran.",
+"They talked."
+], c:1},
+{q:"What is symbolism?", a:[
+"Literal meaning",
+"Object represents idea",
+"Climax",
+"Conflict"
+], c:1}
+];
+
+const testDiv = document.getElementById("test");
+
+questions.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<strong>Q${index+1}: ${item.q}</strong><br>`;
+    item.a.forEach((choice, i) => {
+        div.innerHTML += `
+            <label>
+                <input type="radio" name="q${index}" value="${i}">
+                ${choice}
+            </label><br>
+        `;
+    });
+    testDiv.appendChild(div);
+});
+
+function gradeTest() {
+    let score = 0;
+    questions.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && parseInt(selected.value) === item.c) {
+            score++;
+        }
+    });
+    document.getElementById("result").innerText =
+        "Final Score: " + score + " / " + questions.length;
+
+
+
+
+    }
+
+    
+
+</script>
+<br><br>
+<button onclick="window.location.href='starttestelacomp.html'">
+    Return to Directory
+</button>
+</body>
+</html>
