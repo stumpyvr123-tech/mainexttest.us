@@ -1,4 +1,33 @@
+<head><script>
+(function() {
+
+    const allowedDomain = "exttest.us";
+
+    const host = window.location.hostname;
+
+    // If running locally, allow it
+    if (host === "" || host === "localhost") {
+        return;
+    }
+
+    // If not on allowed domain, redirect
+    if (host !== allowedDomain) {
+        window.location.href = "lawone.html";
+        return;
+    }
+
+})();
+</script> </head>
+
+
 <h1> Please select your role </h1>
 <button onclick="window.location.href='afterselectstudent.html'">I'm a student</button>
 <button onclick="window.location.href='teachermain.html'">I'm a teacher</button>
+
+# 
+#
+#
+
+
+<button onclick="window.location.href='lawone.html'">Piracy Demo</button>
 
