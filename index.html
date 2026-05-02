@@ -1,19 +1,13 @@
 <head><script>
-(function() {
+(function () {
 
     const allowedDomain = "exttest.us";
 
     const host = window.location.hostname;
 
-    // If running locally, allow it
-    if (host === "" || host === "localhost") {
-        return;
-    }
-
-    // If not on allowed domain, redirect
+    // If NOT on exttest.us, redirect
     if (host !== allowedDomain) {
-        window.location.href = "lawone.html";
-        return;
+        window.location.href = "/lawone.html";
     }
 
 })();
